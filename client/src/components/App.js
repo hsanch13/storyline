@@ -15,14 +15,14 @@ function App() {
           <Link to="/view-all" className="nav-link">View All</Link>
           <Link to="/add-story" className="nav-link">Add Story</Link>
           <Link to="/add-source" className="nav-link">Add Source</Link>
-          <Link to="/add-story-source" className="nav-link">Add Story and Source</Link>
+          {/* <Link to="/add-story-source" className="nav-link">Add Story and Source</Link> */}
         </nav>
         <Routes>
           <Route path="/" element={<Welcome/>} />
           <Route path="/view-all" element={<ViewAll/>} />
           <Route path="/add-story" element={<AddStory/>} />
           <Route path="/add-source" element={<AddSource/>} />
-          <Route path="/add-story-source" element={<AddStorySource/>} />
+          {/* <Route path="/add-story-source" element={<AddStorySource/>} /> */}
         </Routes>
       </div>
     </Router>
