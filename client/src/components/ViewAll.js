@@ -1,11 +1,15 @@
 import React from 'react'
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 function ViewAll() {
 
   const [sources, setSources] = useState([])
   const [stories, setStories] = useState([])
+  const navigate = useNavigate();
 
+  // add .catch inside first .then, ask if resp is ok
   useEffect(() => {
     fetch("http://127.0.0.1:5555/sources")
       .then(r => r.json())
@@ -23,7 +27,12 @@ function ViewAll() {
       <h2>All Stories</h2>
       <div className="card-grid">
         {stories.map((story) => (
-          <div key={story.id} className="cardcontainer">
+          <div
+            key={story.id}
+            className="cardcontainer"
+            onClick={() => navigate(`/story/${story.id}`)}
+            style={{ cursor: "pointer" }}
+          >
             <div className="photo">
               <img src={story.image} alt={story.title} />
             </div>
@@ -32,7 +41,13 @@ function ViewAll() {
               <div className="txt2">{story.topic}</div>
             </div>
             <div className="footer">
-              <button className="btn" onClick={() => console.log(`Viewing story ${story.id}`)}>
+              <button
+                className="btn"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering card's click event
+                  navigate(`/story/${story.id}`);
+                }}
+              >
                 View Story
               </button>
             </div>

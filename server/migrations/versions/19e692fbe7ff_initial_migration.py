@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: d6ef411b1cea
+Revision ID: 19e692fbe7ff
 Revises: 
-Create Date: 2024-11-29 22:12:35.404431
+Create Date: 2024-12-04 12:38:30.202911
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd6ef411b1cea'
+revision = '19e692fbe7ff'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,8 +31,8 @@ def upgrade():
 
     op.create_table('stories',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('title', sa.String(), nullable=True),
-    sa.Column('topic', sa.String(), nullable=True),
+    sa.Column('title', sa.String(), nullable=False),
+    sa.Column('topic', sa.String(), nullable=False),
     sa.Column('image', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -53,7 +53,8 @@ def upgrade():
     sa.Column('role', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['source_id'], ['sources.id'], name=op.f('fk_story_sources_source_id_sources')),
     sa.ForeignKeyConstraint(['story_id'], ['stories.id'], name=op.f('fk_story_sources_story_id_stories')),
-    sa.PrimaryKeyConstraint('story_id', 'source_id')
+    sa.PrimaryKeyConstraint('story_id', 'source_id'),
+    sa.UniqueConstraint('source_id', 'story_id', name='unique_source_id_story_id')
     )
     # ### end Alembic commands ###
 

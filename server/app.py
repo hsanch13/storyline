@@ -24,7 +24,7 @@ class Stories(Resource):
                 story = Story.query.get(id)
                 if not story:
                     return make_response({"error": f"story with id {id} not found"}, 404)
-                return make_response(story.to_dict(), 200)
+                return make_response(story.to_dict(rules=("content.body", "story_sources.source",)), 200)
             else:
                 stories = Story.query
                 return make_response([story.to_dict() for story in stories], 200)

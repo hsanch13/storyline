@@ -146,6 +146,8 @@ class Source(db.Model, SerializerMixin):
 
 class StorySource(db.Model, SerializerMixin):
     __tablename__ = "story_sources"
+    __table_args__ = (
+        db.UniqueConstraint("source_id", "story_id", name="unique_source_id_story_id",),)
 
     story_id = db.Column(db.Integer, db.ForeignKey("stories.id"), primary_key=True)
     source_id = db.Column(db.Integer, db.ForeignKey("sources.id"), primary_key=True)
