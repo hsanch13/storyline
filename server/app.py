@@ -26,7 +26,7 @@ class Stories(Resource):
                     return make_response({"error": f"story with id {id} not found"}, 404)
                 return make_response(story.to_dict(), 200)
             else:
-                stories = Story.query.all()
+                stories = Story.query
                 return make_response([story.to_dict() for story in stories], 200)
         except Exception as e:
             return make_response({"error": str(e)}, 500)
@@ -88,8 +88,8 @@ class Contents(Resource):
                 if not content:
                     return make_response({"error": f"content with id {id} not found"}, 404)
                 return make_response(content.to_dict(), 200)
-            else: 
-                contents = Content.query.all()
+            else:
+                contents = Content.query
                 return make_response([content.to_dict() for content in contents], 200)
         except Exception as e:
             return make_response({"error": str(e)}, 500)
@@ -121,10 +121,11 @@ class Sources(Resource):
                     return make_response({"error": f"source with id {id} not found"}, 404)
                 return make_response(source.to_dict(), 200)
             else:
-                sources = Source.query.all()
+                sources = Source.query
                 return make_response([source.to_dict() for source in sources], 200)
         except Exception as e:
             return make_response({"error": str(e)}, 500)
+        
 
 #### POST -- creates a new source
     def post(self):
@@ -180,10 +181,27 @@ class StorySources(Resource):
     ####GET -- Gets all StorySources
     def get(self):
         try:
-            story_sources = StorySource.query.all()
+            story_sources = StorySource.query
             return make_response([story.to_dict() for story in story_sources], 200)
         except Exception as e:
             return make_response({"error": str(e)}, 500)
+        
+# ## create route, retrieve top 3 sources w most stories -- explain how you're routing (RESTful), test it in postman
+
+#     def get(self):
+#         try:
+#          # query database to grab all records
+#            most_source = StorySource.query
+#          # handle not responses
+#             if not most_source:
+#                 return make_response("message": f"could not return sources with most stories")
+#          # handle responses that do match condition
+#             return make_response(source_id.to_dict() for  in most_source)
+#          # return response 
+
+#         except Exception as e: 
+#             return make_response({"error": "message"})
+
 
 ####POST -- creates a new storysource
     def post(self):
@@ -200,7 +218,7 @@ class StorySources(Resource):
         except Exception as e:
             return make_response({"error": str(e)}, 500)    
 
-api.add_resource(StorySources, "/storysources/")
+api.add_resource(StorySources, "/storysources/", "/moststorysources"  )
 
 
 if __name__ == '__main__':

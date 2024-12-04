@@ -18,7 +18,7 @@ class Story(db.Model, SerializerMixin):
     image = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
-    # add relationship
+    # add relationship -- has many content & many sources THROUGH story_sources
     content = db.relationship("Content", back_populates="story", cascade="all, delete-orphan")
     story_sources = db.relationship("StorySource", back_populates="story", cascade="all, delete-orphan")
 
@@ -60,7 +60,7 @@ class Content(db.Model, SerializerMixin):
     body = db.Column(db.String)
     story_id = db.Column(db.Integer, db.ForeignKey("stories.id"), index=True)
 
-    # add relationship
+    # add relationship -- BELONGS to a Story
     story = db.relationship("Story", back_populates="content")
 
     # add serialization rules
@@ -89,7 +89,7 @@ class Source(db.Model, SerializerMixin):
     phone = db.Column(db.String, index=True)
     email = db.Column(db.String, index=True)
 
-    # add relationship
+    # add relationship -- BELONGS to many stories THROUGH story_source
     story_sources = db.relationship("StorySource", back_populates="source")
 
     # add serialization rules
@@ -151,14 +151,14 @@ class StorySource(db.Model, SerializerMixin):
     source_id = db.Column(db.Integer, db.ForeignKey("sources.id"), primary_key=True)
     role = db.Column(db.String)
 
-    # add relationship
+    # add relationship -- BELONGS to Story and Source. StorySource associates the two models
     story = db.relationship("Story", back_populates="story_sources")
     source = db.relationship("Source", back_populates="story_sources")
 
     # add serialization rules
     serialize_rules = ('-story', '-source')
 
-    # add validation
+    # add validation ## set or reset an object
     @validates("role")
     def validate_role(self, _, value):
         valid_roles = [
