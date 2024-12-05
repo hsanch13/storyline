@@ -2,6 +2,7 @@ import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 function AddSource() {
 
@@ -37,13 +38,14 @@ function AddSource() {
           body: JSON.stringify(values),
         });
         if (!response.ok) {
+          toast.error('Failed to create source')
           throw new Error('Failed to create source');
         }
-        alert('Source created successfully!');
+        toast.success('Source created successfully!');
         navigate('/view-all');
       } catch (error) {
         console.error(error);
-        alert('Error creating source. Please try again.');
+        toast.error('Error creating source. Please try again.');
       }
     },
   });

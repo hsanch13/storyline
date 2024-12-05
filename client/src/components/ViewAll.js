@@ -39,7 +39,7 @@ function ViewAll() {
               <button
                 className="btn"
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering card's click event
+                  e.stopPropagation(); // prevents card's click event
                   navigate(`/story/${story.id}`);
                 }}
               >
@@ -61,7 +61,7 @@ function ViewAll() {
             <button
                 className="btn"
                 onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering card's click event
+                  e.stopPropagation(); // prevents card's click event
                   navigate(`/source/${source.id}`);
                 }}
               >

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 
 function AddStory() {
   const formik = useFormik({
@@ -37,14 +38,14 @@ function AddStory() {
         });
         if (response.ok) {
           const newStory = await response.json();
-          alert('Story created successfully!');
+          toast.success('Story created successfully!');
           resetForm();
         } else {
           const errorData = await response.json();
-          alert(`Error: ${errorData.error}`);
+          toast.error(`Error: ${errorData.error}`);
         }
       } catch (error) {
-        alert('An unexpected error occurred.');
+        toast.error('An unexpected error occurred.');
       }
     },
   });

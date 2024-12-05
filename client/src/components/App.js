@@ -21,7 +21,11 @@ function App() {
     fetch(`http://localhost:5555/stories/${id}`, { method: "DELETE" })
       .then((res) => {
         if (res.ok) {
-          setStories(stories.filter((story) => story.id !== id));
+          setStories(stories.filter((story) => story.id !== id)
+        );
+        toast.success("Story deleted successfully");
+        } else {
+          toast.error("Failed to delete story");
         }
       })
       .catch((error) => console.error("Error deleting story:", error));
@@ -43,13 +47,13 @@ function App() {
             story.id === id ? updatedStory : story
           )
         );
+        toast.success("Story updated successfully")
       })
-      .catch((error) => console.error("Error updating story:", error));
+      .catch(() => toast.error("An error occurred while updating the source"));
   };
 
   //deletes a source
   const deleteSource = (id) => {
-
     fetch(`http://127.0.0.1:5555/sources/${id}`, { method: "DELETE" })
       .then((r) => {
         if (r.ok) {
@@ -57,6 +61,7 @@ function App() {
             prevSources.filter((source) => source.id !== id)
           );
           toast.success("Source deleted successfully");
+          // navigate("/")
         } else {
           toast.error("Failed to delete source");
         }
@@ -64,7 +69,7 @@ function App() {
       .catch(() => toast.error("An error occurred while deleting the source"));
   };
 
-  // Updates a source
+  //updates a source
   const updateSource = (id, updatedData) => {
     fetch(`http://127.0.0.1:5555/sources/${id}`, {
       method: "PATCH",
