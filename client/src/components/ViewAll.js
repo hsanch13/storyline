@@ -57,9 +57,22 @@ function ViewAll() {
         ))}
       </div>
       <h2>All Sources</h2>
-      <ul>
+      <div className="wrapper">
+      <div className="sources-container">
+        {sources.map((source) => (
+          <div key={source.id} className="service-block-two">
+            <div className="inner-box">
+              <div className="icon-box">📖</div>
+              <h5>{source.name}</h5>
+              <p className="text">{source.title}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+      {/* <ul>
         <p>{sources.map((source) => <li key={source.id}>{source.name}</li>)}</p>
-      </ul>
+      </ul> */}
     </div>
   )
 }
