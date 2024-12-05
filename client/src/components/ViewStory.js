@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 function ViewStory({ onDelete, onUpdate }) {
 
     const [oneStory, setOneStory] = useState(null)
 
     const { id } = useParams()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         fetch(`http://127.0.0.1:5555/stories/${id}`)
@@ -34,20 +36,7 @@ function ViewStory({ onDelete, onUpdate }) {
     };
 
     const handleUpdate = () => {
-        const updatedTitle = prompt("Enter new title:", oneStory.title);
-        const updatedTopic = prompt("Enter new topic:", oneStory.topic);
-        const updatedImage = prompt("Enter new image URL:", oneStory.image);
-    
-        if (updatedTitle && updatedTopic && updatedImage) {
-            const updatedData = {
-                title: updatedTitle,
-                topic: updatedTopic,
-                image: updatedImage,
-            };
-    
-            onUpdate(oneStory.id, updatedData);
-            setOneStory((prevStory) => ({ ...prevStory, ...updatedData }));
-        }
+        navigate(`/stories/${oneStory.id}/edit`)
     };
     
     return (

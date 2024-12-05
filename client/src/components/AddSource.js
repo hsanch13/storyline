@@ -8,6 +8,7 @@ function AddSource() {
 
   const navigate = useNavigate()
   
+  ///creating object for new source instantiation entering db
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -16,6 +17,7 @@ function AddSource() {
       email: '',
     },
 
+///validating for length, phone number and email
     validationSchema: Yup.object({
       name: Yup.string()
         .max(60, 'Must be 60 characters or less')
@@ -30,6 +32,8 @@ function AddSource() {
         .email('Invalid email address')
         .required('Required'),
     }),
+
+    ///onSubmit to create new source
     onSubmit: async (values) => {
       try {
         const response = await fetch('/sources', {

@@ -10,6 +10,7 @@ import ViewStory from "./ViewStory";
 import ViewSource from "./ViewSource";
 import * as Yup from "yup"
 import { Filter } from "bad-words"
+import EditStory from "./EditStory";
 
 function App() {
   const [stories, setStories] = useState([]);
@@ -20,7 +21,7 @@ function App() {
 
   // const navigate = useNavigate()
 
-  //validate story attributes:
+  ///validating story attributes -- title for length/profanity, req. topic list,
   const storySchema = Yup.object({
     title: Yup.string()
       .required("Title is required")
@@ -59,7 +60,7 @@ function App() {
       ),
   });
 
-  //validate source attributes
+  ///validating source attributes -- name & title for length/profanity, email and phone
   const sourceSchema = Yup.object({
     name: Yup.string()
       .required("Name is required")
@@ -202,12 +203,12 @@ function App() {
       );
       toast.success("Source updated successfully");
     } catch (error) {
-      // validation errors & profanity check
+      // validation errors & profanity check conditions
       if (error.name === "ValidationError") {
         if (error.message.includes("inappropriate language")) {
           toast.error("Your input contains inappropriate language.");
         } else {
-          toast.error(error.message); // show other validation errors if any besides profanity
+          toast.error(error.message); // show other validation errors if any besides profanity come up
         }
       } else {
         toast.error(
@@ -225,7 +226,6 @@ function App() {
           <Link to="/view-all" className="nav-link">View All</Link>
           <Link to="/add-story" className="nav-link">Add Story</Link>
           <Link to="/add-source" className="nav-link">Add Source</Link>
-          {/* <Link to="/add-story-source" className="nav-link">Add Story and Source</Link> */}
         </nav>
         <Toaster />
         <Routes>
@@ -251,7 +251,13 @@ function App() {
               />
             }
           />
-          {/* <Route path="/add-story-source" element={<AddStorySource/>} /> */}
+          <Route
+            path="/stories/:id/edit"
+            element={
+              <EditStory 
+              />
+            }
+          />
         </Routes>
       </div>
     </Router>
