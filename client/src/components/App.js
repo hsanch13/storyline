@@ -101,16 +101,16 @@ function App() {
       }),
   });
 
-
   ///deletes a story
   const deleteStory = (id) => {
-    fetch(`http://localhost:5555/stories/${id}`, { method: "DELETE" })
+    return fetch(`/stories/${id}`, { method: "DELETE" })
       .then((res) => {
         if (res.ok) {
-          setStories(stories.filter((story) => story.id !== id));
           toast.success("Story deleted successfully");
+          return true
         } else {
           toast.error("Failed to delete story");
+          return false
         }
       })
       .catch((error) => {
@@ -119,43 +119,6 @@ function App() {
       });
   };
 
-  ///updates a story
-  const updateStory = async (id, updatedData) => {
-    try {
-      // Validate data before sending, including profanity check
-      await storySchema.validate(updatedData);
-
-      const response = await fetch(`http://localhost:5555/stories/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update story");
-      }
-
-      const updatedStory = await response.json();
-
-      setStories((prevStories) =>
-        prevStories.map((story) =>
-          story.id === id ? updatedStory : story
-        )
-      );
-      toast.success("Story updated successfully");
-    } catch (error) {
-      // Handle validation errors and general errors
-      if (error.name === "ValidationError") {
-        toast.error(error.message); // toast error for profanity
-      } else {
-        toast.error(
-          error.message || "An error occurred while updating the story"
-        );
-      }
-    }
-  };
 
   ///deletes a source
   const deleteSource = (id) => {
@@ -238,7 +201,6 @@ function App() {
             element={
               <ViewStory
                 onDelete={deleteStory}
-                onUpdate={updateStory}
               />
             }
           />

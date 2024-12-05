@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
 
-function ViewStory({ onDelete, onUpdate }) {
+function ViewStory({ onDelete }) {
 
     const [oneStory, setOneStory] = useState(null)
 
@@ -16,7 +16,10 @@ function ViewStory({ onDelete, onUpdate }) {
                 if (r.ok) {
                     r.json().then(storyData => setOneStory(storyData))
                 } else {
-                    r.json().then(errorObj => toast.error(errorObj.message || errorObj.error))
+                    r.json().then(errorObj => {
+                        toast.error(errorObj.message || errorObj.error)
+                        navigate("/view-all")
+                })
                 }
             })
     }, [id])
@@ -31,7 +34,7 @@ function ViewStory({ onDelete, onUpdate }) {
             return;
         }
         if (window.confirm("Are you sure you want to delete this story?")) {
-            onDelete(oneStory.id);
+            onDelete(oneStory.id).then((successFlag) => successFlag ? navigate("/view-all"): null);
         }
     };
 

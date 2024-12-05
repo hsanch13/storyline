@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';
 
-
 function EditStory() {
 
   const {id} = useParams()
