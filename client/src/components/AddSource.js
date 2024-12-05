@@ -1,8 +1,12 @@
 import React from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 
 function AddSource() {
+
+  const navigate = useNavigate()
+  
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -10,6 +14,7 @@ function AddSource() {
       phone: '',
       email: '',
     },
+
     validationSchema: Yup.object({
       name: Yup.string()
         .max(60, 'Must be 60 characters or less')
@@ -35,6 +40,7 @@ function AddSource() {
           throw new Error('Failed to create source');
         }
         alert('Source created successfully!');
+        navigate('/view-all');
       } catch (error) {
         console.error(error);
         alert('Error creating source. Please try again.');

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast"
 import toast from 'react-hot-toast'
 import { useState } from "react";
@@ -13,6 +13,8 @@ function App() {
   const [stories, setStories] = useState([]);
 
   const [sources, setSources] = useState([]);
+
+  // const navigate = useNavigate()
 
   //deletes a story
   const deleteStory = (id) => {
@@ -45,9 +47,9 @@ function App() {
       .catch((error) => console.error("Error updating story:", error));
   };
 
-
   //deletes a source
   const deleteSource = (id) => {
+
     fetch(`http://127.0.0.1:5555/sources/${id}`, { method: "DELETE" })
       .then((r) => {
         if (r.ok) {

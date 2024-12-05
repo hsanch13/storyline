@@ -1,26 +1,22 @@
-import React from 'react'
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function ViewAll() {
-
-  const [sources, setSources] = useState([])
-  const [stories, setStories] = useState([])
+  const [sources, setSources] = useState([]);
+  const [stories, setStories] = useState([]);
   const navigate = useNavigate();
 
-  // add .catch inside first .then, ask if resp is ok
   useEffect(() => {
     fetch("http://127.0.0.1:5555/sources")
-      .then(r => r.json())
-      .then(sourceData => setSources(sourceData))
-  }, [])
+      .then((r) => r.json())
+      .then((sourceData) => setSources(sourceData));
+  }, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:5555/stories")
-      .then(r => r.json())
-      .then(storyData => setStories(storyData))
-  }, [])
+      .then((r) => r.json())
+      .then((storyData) => setStories(storyData));
+  }, []);
 
   return (
     <div>
@@ -31,9 +27,6 @@ function ViewAll() {
             key={story.id}
             className="cardcontainer"
             onClick={() => navigate(`/story/${story.id}`)}
-            style={{ cursor: "pointer" }}
-            story={story}
-            
           >
             <div className="photo">
               <img src={story.image} alt={story.title} />
@@ -56,25 +49,30 @@ function ViewAll() {
           </div>
         ))}
       </div>
+
       <h2>All Sources</h2>
-      <div className="wrapper">
-      <div className="sources-container">
+      <div className="card-grid">
         {sources.map((source) => (
           <div key={source.id} className="service-block-two">
             <div className="inner-box">
               <div className="icon-box">📖</div>
               <h5>{source.name}</h5>
               <p className="text">{source.title}</p>
+            <button
+                className="btn"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering card's click event
+                  navigate(`/source/${source.id}`);
+                }}
+              >
+                See More
+              </button>
             </div>
           </div>
         ))}
       </div>
     </div>
-      {/* <ul>
-        <p>{sources.map((source) => <li key={source.id}>{source.name}</li>)}</p>
-      </ul> */}
-    </div>
-  )
+  );
 }
 
-export default ViewAll
+export default ViewAll;

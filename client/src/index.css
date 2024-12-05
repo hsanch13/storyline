@@ -1,165 +1,12 @@
-/* import 'bootstrap/dist/css/bootstrap.min.css'; */
-
 :root {
   --bg: #282c34;
   --header: #fff;
   --link: #61dafb;
   --text: hsla(0, 0%, 100%, 0.88);
+  --hover-shadow: 0 0 45px gray;
 }
 
-/* story cards */
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'roboto', sans-serif;
-  background-color: #F2F2F2;
-}
-
-h1 {
-  text-align: center;
-  color: #333333;
-}
-
-.cardcontainer {
-  width: 350px;
-  height: 500px;
-  background-color: white;
-  margin-left: auto;
-  margin-right: auto;
-  transition: 0.3s;
-}
-
-.cardcontainer:hover {
-  box-shadow: 0 0 45px gray;
-}
-
-.photo {
-  height: 300px;
-  width: 100%;
-}
-
-.photo img {
-  height: 100%;
-  width: 100%;
-}
-
-.txt1 {
-  margin: auto;
-  text-align: center;
-  font-size: 17px;
-}
-
-.content {
-  width: 80%;
-  height: 100px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  top: -33px;
-}
-
-.photos {
-  width: 90px;
-  height: 30px;
-  background-color: #E74C3C;
-  color: white;
-  position: relative;
-  top: -30px;
-  padding-left: 10px;
-  font-size: 20px;
-}
-
-.txt4 {
-  font-size: 27px;
-  position: relative;
-  top: 33px;
-}
-
-.txt5 {
-  position: relative;
-  top: 18px;
-  color: #E74C3C;
-  font-size: 23px;
-}
-
-.txt2 {
-  position: relative;
-  top: 10px;
-}
-
-.cardcontainer:hover>.photo {
-  height: 200px;
-  animation: move1 0.5s ease both;
-}
-
-@keyframes move1 {
-  0% {
-    height: 300px
-  }
-
-  100% {
-    height: 200px
-  }
-}
-
-.cardcontainer:hover>.content {
-  height: 200px;
-}
-
-.footer {
-  width: 80%;
-  height: 100px;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: white;
-  position: relative;
-  top: -15px;
-}
-
-.btn {
-  position: relative;
-  top: 20px;
-}
-
-#heart {
-  cursor: pointer;
-}
-
-.like {
-  float: right;
-  font-size: 22px;
-  position: relative;
-  top: 20px;
-  color: #333333;
-}
-
-.fa-gratipay {
-  margin-right: 10px;
-  transition: 0.5s;
-}
-
-.fa-gratipay:hover {
-  color: #E74C3C;
-}
-
-.txt3 {
-  color: gray;
-  position: relative;
-  top: 18px;
-  font-size: 14px;
-}
-
-.comments {
-  float: right;
-  cursor: pointer;
-}
-
-.fa-clock,
-.fa-comments {
-  margin-right: 7px;
-}
-
+/* Common styles for all cards */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -167,171 +14,96 @@ h1 {
   margin: 20px;
 }
 
-
-
-
-/* source cards */
-
-.wrapper {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #000;
-}
-
-.service-block-two {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 30px
-}
-
-.service-block-two .inner-box {
-  position: relative;
+.cardcontainer, .service-block-two {
+  transition: 0.3s;
+  background-color: white;
+  border-radius: 8px;
   overflow: hidden;
-  padding: 45px 45px;
-  border-radius: 6px;
-  background-color: #f5f5f5
+  box-shadow: var(--hover-shadow);
+  cursor: pointer;
 }
 
-.service-block-two .inner-box:before {
-  position: absolute;
-  content: '';
-  left: 0px;
-  bottom: 0px;
+.cardcontainer:hover, .service-block-two:hover {
+  box-shadow: 0 0 45px gray;
+}
+
+/* Story card-specific styles */
+.cardcontainer .photo {
+  height: 300px;
   width: 100%;
-  height: 50%;
-  opacity: 0;
-  background-color: #141d38;
-  -webkit-transition: all 600ms ease;
-  -ms-transition: all 600ms ease;
-  -o-transition: all 600ms ease;
-  -moz-transition: all 600ms ease;
-  transition: all 600ms ease
-}
-
-.service-block-two .inner-box .shape-one {
-  content: '';
-  width: 250px;
-  height: 250px;
-  background: #0060ff;
-  border-radius: 50%;
-  position: absolute;
-  top: -120px;
-  opacity: 0.4;
-  right: -120px;
-  transform: scale(0);
-  -webkit-transition: all 600ms ease;
-  -moz-transition: all 600ms ease;
-  -ms-transition: all 600ms ease;
-  -o-transition: all 600ms ease;
-  transition: all 600ms ease
-}
-
-.service-block-two .inner-box .shape-two {
-  content: '';
-  width: 373px;
-  height: 373px;
-  background: #0060ff;
-  border-radius: 50%;
-  position: absolute;
-  top: -180px;
-  right: -180px;
-  z-index: 1;
-  opacity: 0;
-  transform: scale(0);
-  -webkit-transition: all 600ms ease;
-  -moz-transition: all 600ms ease;
-  -ms-transition: all 600ms ease;
-  -o-transition: all 600ms ease;
-  transition: all 600ms ease
-}
-
-.service-block-two .inner-box .icon-box {
   position: relative;
+}
+
+.cardcontainer .photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardcontainer .content {
+  padding: 20px;
+  text-align: center;
+}
+
+.cardcontainer .txt1 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.cardcontainer .txt2 {
+  color: gray;
+  font-size: 14px;
+}
+
+.cardcontainer .footer {
+  padding: 10px;
+  text-align: center;
+}
+
+.cardcontainer .btn {
+  background-color: #61dafb;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+/* Source card-specific styles */
+.service-block-two .inner-box {
+  padding: 30px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.service-block-two .icon-box {
   font-size: 65px;
-  line-height: 1em;
   color: #0060ff;
-  -webkit-transition: all 300ms ease;
-  -ms-transition: all 300ms ease;
-  -o-transition: all 300ms ease;
-  -moz-transition: all 300ms ease;
-  transition: all 300ms ease
-}
-
-.service-block-two .inner-box .icon-box {
-  position: relative;
-  z-index: 2
-}
-
-.service-block-two .inner-box .icon-box {
-  position: relative;
-  font-size: 65px;
-  line-height: 1em;
-  color: #0060ff;
-  -webkit-transition: all 300ms ease;
-  -ms-transition: all 300ms ease;
-  -o-transition: all 300ms ease;
-  -moz-transition: all 300ms ease;
-  transition: all 300ms ease
+  margin-bottom: 20px;
 }
 
 .service-block-two .inner-box h5 {
-  position: relative;
-  z-index: 2;
-  color: #222222;
-  font-weight: 600;
-  line-height: 1.3em;
-  margin: 20px 0px 15px
+  font-size: 22px;
+  color: #333;
+  font-weight: bold;
 }
 
 .service-block-two .inner-box .text {
-  position: relative;
-  color: #222222;
-  z-index: 2;
   font-size: 16px;
-  line-height: 1.8em;
-  -webkit-transition: all 300ms ease;
-  -ms-transition: all 300ms ease;
-  -o-transition: all 300ms ease;
-  -moz-transition: all 300ms ease;
-  transition: all 300ms ease
+  color: #666;
 }
 
-.service-block-two .inner-box:hover::before {
-  height: 100%;
-  opacity: 1
+/* Hover effects for source cards */
+.service-block-two:hover .icon-box {
+  color: #fff;
 }
 
-.service-block-two .inner-box:hover .shape-one {
-  transform: scale(1);
-  webkit-transition-delay: 300ms;
-  -ms-transition-delay: 300ms;
-  transition-delay: 300ms
+.service-block-two:hover .inner-box {
+  background-color: #141d38;
+  color: white;
 }
 
-.service-block-two .inner-box:hover .shape-two {
-  opacity: 0.4;
-  transform: scale(1);
-  webkit-transition-delay: 600ms;
-  -ms-transition-delay: 600ms;
-  transition-delay: 600ms
-}
-
-.service-block-two .inner-box:hover .icon-box,
-.service-block-two .inner-box:hover h5 a,
-.service-block-two .inner-box:hover .text {
-  color: #ffffff
-}
-
-.service-block-two .inner-box:hover .icon-box,
-.service-block-two .inner-box:hover h5 a,
-.service-block-two .inner-box:hover .text {
-  color: #ffffff
-}
-
-.service-block-two .inner-box:hover .icon-box,
-.service-block-two .inner-box:hover h5 a,
-.service-block-two .inner-box:hover .text {
-  color: #ffffff
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
 }
