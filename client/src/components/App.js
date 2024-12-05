@@ -4,10 +4,40 @@ import Welcome from "./Welcome";
 import ViewAll from "./ViewAll";
 import AddStory from "./AddStory";
 import AddSource from "./AddSource";
-import AddStorySource from "./AddStorySource";
 import ViewStory from "./ViewStory";
+import { useState } from "react";
 
 function App() {
+  const [stories, setStories] = useState([]);
+
+  const deleteStory = (id) => {
+    fetch(`http://localhost:5555/stories/${id}`, { method: "DELETE" })
+      .then((res) => {
+        if (res.ok) {
+          setStories(stories.filter((story) => story.id !== id));
+        }
+      })
+      .catch((error) => console.error("Error deleting story:", error));
+  };
+
+  const updateStory = (id, updatedData) => {
+    fetch(`http://localhost:5555/stories/${id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+    })
+        .then((res) => res.json())
+        .then((updatedStory) => {
+            setStories((prevStories) =>
+                prevStories.map((story) =>
+                    story.id === id ? updatedStory : story
+                )
+            );
+        })
+        .catch((error) => console.error("Error updating story:", error));
+};
 
   return (
     <Router>
@@ -25,7 +55,7 @@ function App() {
           <Route path="/view-all" element={<ViewAll/>} />
           <Route path="/add-story" element={<AddStory/>} />
           <Route path="/add-source" element={<AddSource/>} />
-          <Route path="/story/:id" element={<ViewStory />} />
+          <Route path="/story/:id" element={<ViewStory onDelete={deleteStory} onUpdate={updateStory} />} />
           {/* <Route path="/add-story-source" element={<AddStorySource/>} /> */}
         </Routes>
       </div>
