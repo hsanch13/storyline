@@ -19,7 +19,7 @@ function ViewStory({ onDelete }) {
                     r.json().then(errorObj => {
                         toast.error(errorObj.message || errorObj.error)
                         navigate("/view-all")
-                })
+                    })
                 }
             })
     }, [id])
@@ -34,18 +34,18 @@ function ViewStory({ onDelete }) {
             return;
         }
         if (window.confirm("Are you sure you want to delete this story?")) {
-            onDelete(oneStory.id).then((successFlag) => successFlag ? navigate("/view-all"): null);
+            onDelete(oneStory.id).then((successFlag) => successFlag ? navigate("/view-all") : null);
         }
     };
 
     const handleUpdate = () => {
         navigate(`/stories/${oneStory.id}/edit`)
     };
-    
+
     return (
-        <div>
+        <div className="service-22">
             <h2>{oneStory.title}</h2>
-            {oneStory.image && <img src={oneStory.image} alt={oneStory.title} />}
+            {oneStory.image && <img src={oneStory.image} alt={oneStory.title} className="img-shadow" />}
             <h3>Story:</h3>
             {oneStory.content && oneStory.content.length > 0 ? (
                 oneStory.content.map((contentItem) => (
@@ -54,10 +54,14 @@ function ViewStory({ onDelete }) {
             ) : (
                 <p>No content available for this story.</p>
             )}
-            <button onClick={handleUpdate}>Edit</button>
-            <button onClick={handleDelete}>Delete</button>
+            <div className="wrap-service-22">
+                <div className="text-box">
+                    <button onClick={handleUpdate} className="btn-info-gradiant btn-md">Edit</button>
+                    <button onClick={handleDelete} className="btn-info-gradiant btn-md">Delete</button>
+                </div>
+            </div>
         </div>
-    )
-}
+    );
+};
 
 export default ViewStory
