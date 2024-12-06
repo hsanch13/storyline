@@ -125,7 +125,7 @@ class Sources(Resource):
                 return make_response([source.to_dict() for source in sources], 200)
         except Exception as e:
             return make_response({"error": str(e)}, 500)
-        
+
 
 #### POST -- creates a new source
     def post(self):
@@ -174,6 +174,27 @@ class Sources(Resource):
             return make_response({"error": str(e)}, 500)
    
 api.add_resource(Sources, "/sources", "/sources/<int:id>")
+
+
+###### LIVE CODING CHALLENGE 2 ######
+### return a list of sources that have authored 5 or more stories
+#set up resource
+# define function
+# try except
+# grab all sources - query
+# create variable for filtered sources
+# loop through the filtered sources to serialize them 
+# return make response(to_dict)
+
+class SourcesWithFiveOrMoreStories(Resource):
+    def get(self):
+        try:
+            all_sources = Source.query
+            filtered_sources = [source.to_dict() for source in all_sources if len(source.story_sources) > 4]
+            return make_response(filtered_sources, 200)
+        except Exception as e:
+            return {"error": str(e)}, 500
+api.add_resource(SourcesWithFiveOrMoreStories, "/sources/with-five-stories")
 
 
 ####CRUD FOR STORYSOURCES
