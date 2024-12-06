@@ -14,8 +14,6 @@ import EditStory from "./EditStory";
 import EditSource from "./EditSource";
 
 function App() {
-  // const [stories, setStories] = useState([]);
-  // const [sources, setSources] = useState([]);
 
   const filter = new Filter(); // need this for filtering bad-words pkg
 

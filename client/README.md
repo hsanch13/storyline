@@ -1,70 +1,133 @@
-# Getting Started with Create React App
+# Storyline  
+**Phase 4 Project – Flatiron School – Cohort 09/16/2024**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## Overview  
+**Storyline** is a full-stack application designed for journalists to manage story ideas, sources, and content effectively. Built with a **React frontend** and a **Flask backend**, it provides a simple and practical solution for organizing stories and linking them with relevant sources.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### CRUD Functionality:  
+- Full CRUD actions for stories and sources.  
+- Create and read actions for all resources.  
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Data Validations:  
+- Stories, content, and sources validated for specific formats and rules.  
 
-### `npm test`
+### Client-Side Routing:  
+- Three routes accessible via a navbar.  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### User Stories:  
+- Add new story ideas or sources.  
+- Update, edit, or delete stories and sources.  
+- View detailed information for each story or source.  
 
-### `npm run build`
+### Stretch Goals:  
+- Search stories by title or keyword.  
+- Filter sources by role.  
+- Manage deadlines and additional story details.  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Technologies Used  
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Frontend:  
+- **React** (with React Router for routing)  
+- **Formik** for forms and validations  
 
-### `npm run eject`
+### Backend:  
+- **Flask** (with Flask-RESTful for API routes)  
+- **Flask-SQLAlchemy** and **Flask-Migrate** for database management  
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Database:  
+- **SQLite**  
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Other Tools:  
+- **Fetch API** for communication between frontend and backend  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Models and Relationships  
 
-## Learn More
+### Story:  
+- **Attributes**: `id`, `title`, `topic`, `image`, `created_at`  
+- **Relationships**: Has many content pieces, has many sources through `StorySource`  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Content:  
+- **Attributes**: `id`, `story_id`, `body`  
+- **Relationships**: Belongs to a story  
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Source:  
+- **Attributes**: `id`, `name`, `title`, `phone`, `email`  
+- **Relationships**: Belongs to many stories through `StorySource`  
 
-### Code Splitting
+### StorySource (Association Model):  
+- **Attributes**: `story_id`, `source_id`, `role`  
+- **Relationships**: Links stories and sources  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Application Pages  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Welcome Page:  
+- **Path**: `/`  
+- **Description**: Displays buttons to create stories, add sources, or view all entries.  
 
-### Making a Progressive Web App
+### View All Stories and Sources:  
+- **Path**: `/view-all`  
+- **Description**: Displays a list of all stories and sources as expandable cards.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Individual Story Page:  
+- **Path**: `/story/:id`  
+- **Description**: Shows detailed information about a story. Includes edit and delete options.  
 
-### Advanced Configuration
+### Individual Source Page:  
+- **Path**: `/source/:id`  
+- **Description**: Shows detailed information about a source. Includes edit and delete options.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### Forms:  
+- **Add Story**: `/add-story`  
+- **Add Source**: `/add-source`  
+- **Edit Story**: `/story/:id/edit`  
+- **Edit Source**: `/source/:id/edit`  
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Setup Instructions  
 
-### `npm run build` fails to minify
+### Backend Setup  
+1. Navigate to the server directory.  
+2. Install dependencies:  
+   ```bash
+   pipenv install  
+   pipenv shell  
+3. Run Flask server:
+   ```bash
+   python server/app.py  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Frontend Setup
+1. Navigate to client directory
+2. Install dependencies:
+   ```bash
+   npm install  
+   npm start
+
+### Database Setup
+1. Initialize the database:
+   ```bash
+   flask db init
+   flask db upgrade
+2. Seed the database (optional):
+   ```bash
+   python server/seed.py  
+
+### Future Enhancements
+- Add search functionality for stories.
+- Filter sources by role or other attributes.
+- Manage deadlines and add multimedia content like photos or infographics to stories.
+
+### Acknowledgements
+Thanks so much to the Flatiron School instructors and my peers for guidance and support throughout this project. Luke, Matteo, Nolan, Alin, Guillermo. Thanks for being such a good baby, Ira, and thanks to my family for taking care of him during this project!
