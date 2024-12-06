@@ -1,22 +1,28 @@
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-function ViewSource({ onDelete, onUpdate }) {
+function ViewSource({ onDelete }) {
+
     const [oneSource, setOneSource] = useState(null);
+
     const { id } = useParams();
+
+    const navigate = useNavigate ()
 
     useEffect(() => {
         fetch(`http://127.0.0.1:5555/sources/${id}`)
-            .then((r) => {
+            .then(r => {
                 if (r.ok) {
-                    r.json().then((sourceData) => setOneSource(sourceData));
+                    r.json().then(sourceData => setOneSource(sourceData))
                 } else {
-                    r.json().then((errorObj) => toast.error(errorObj.message || errorObj.error));
+                    r.json().then(errorObj => {
+                        toast.error(errorObj.message || errorObj.error)
+                        navigate("/view-all")
+                })
                 }
             })
-            .catch(() => toast.error('Failed to fetch source data.'));
-    }, [id]);
+    }, [id])
 
     if (!oneSource) {
         return <h2>Loading...</h2>;
@@ -28,33 +34,18 @@ function ViewSource({ onDelete, onUpdate }) {
             return;
         }
         if (window.confirm("Are you sure you want to delete this source?")) {
-            onDelete(oneSource.id);
+            onDelete(oneSource.id).then((successFlag) => successFlag ? navigate("/view-all"): null);
         }
     };
 
     const handleUpdate = () => {
-        const updatedName = prompt("Enter new name:", oneSource.name);
-        const updatedTitle = prompt("Enter new title:", oneSource.title);
-        const updatedPhone = prompt("Enter new phone:", oneSource.phone);
-        const updatedEmail = prompt("Enter new email:", oneSource.email);
-
-        if (updatedName && updatedTitle && updatedPhone && updatedEmail) {
-            const updatedData = {
-                name: updatedName,
-                title: updatedTitle,
-                phone: updatedPhone,
-                email: updatedEmail,
-            };
-
-            onUpdate(oneSource.id, updatedData);
-            setOneSource((prevSource) => ({ ...prevSource, ...updatedData }));
-        }
+        navigate(`/sources/${oneSource.id}/edit`)
     };
 
     return (
         <div>
             <h2>{oneSource.name}</h2>
-            <h3>Title: {oneSource.title}</h3>
+            <h3></h3>
             <p>Phone: {oneSource.phone}</p>
             <p>Email: {oneSource.email}</p>
             <button onClick={handleUpdate}>Edit</button>

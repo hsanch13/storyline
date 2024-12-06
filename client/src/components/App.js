@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast"
 import toast from 'react-hot-toast'
-import { useState } from "react";
+// import { useState } from "react";
 import Welcome from "./Welcome";
 import ViewAll from "./ViewAll";
 import AddStory from "./AddStory";
@@ -11,15 +11,13 @@ import ViewSource from "./ViewSource";
 import * as Yup from "yup"
 import { Filter } from "bad-words"
 import EditStory from "./EditStory";
+import EditSource from "./EditSource";
 
 function App() {
-  const [stories, setStories] = useState([]);
-
-  const [sources, setSources] = useState([]);
+  // const [stories, setStories] = useState([]);
+  // const [sources, setSources] = useState([]);
 
   const filter = new Filter(); // need this for filtering bad-words pkg
-
-  // const navigate = useNavigate()
 
   ///validating story attributes -- title for length/profanity, req. topic list,
   const storySchema = Yup.object({
@@ -119,66 +117,22 @@ function App() {
       });
   };
 
-
   ///deletes a source
   const deleteSource = (id) => {
-    fetch(`http://localhost:5555/sources/${id}`, { method: "DELETE" })
+    return fetch(`/sources/${id}`, { method: "DELETE" })
       .then((res) => {
         if (res.ok) {
-          setSources((prevSources) =>
-            prevSources.filter((source) => source.id !== id)
-          );
           toast.success("Source deleted successfully");
+          return true
         } else {
           toast.error("Failed to delete source");
+          return false
         }
       })
       .catch((error) => {
         console.error("Error deleting source:", error);
         toast.error("An error occurred while deleting the source");
       });
-  };
-
-  ///updates a source
-  const updateSource = async (id, updatedData) => {
-    try {
-      // check source data before sending
-      await sourceSchema.validate(updatedData);
-
-      const response = await fetch(`http://localhost:5555/sources/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to update source");
-      }
-
-      const updatedSource = await response.json();
-
-      setSources((prevSources) =>
-        prevSources.map((source) =>
-          source.id === id ? updatedSource : source
-        )
-      );
-      toast.success("Source updated successfully");
-    } catch (error) {
-      // validation errors & profanity check conditions
-      if (error.name === "ValidationError") {
-        if (error.message.includes("inappropriate language")) {
-          toast.error("Your input contains inappropriate language.");
-        } else {
-          toast.error(error.message); // show other validation errors if any besides profanity come up
-        }
-      } else {
-        toast.error(
-          error.message || "An error occurred while updating the source"
-        );
-      }
-    }
   };
 
   return (
@@ -209,7 +163,6 @@ function App() {
             element={
               <ViewSource
                 onDelete={deleteSource}
-                onUpdate={updateSource}
               />
             }
           />
@@ -217,6 +170,13 @@ function App() {
             path="/stories/:id/edit"
             element={
               <EditStory 
+              />
+            }
+          />
+          <Route
+            path="/sources/:id/edit"
+            element={
+              <EditSource 
               />
             }
           />

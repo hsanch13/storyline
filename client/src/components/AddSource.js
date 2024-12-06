@@ -34,7 +34,7 @@ function AddSource() {
     }),
 
     ///onSubmit to create new source
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
         const response = await fetch('/sources', {
           method: 'POST',
@@ -42,14 +42,16 @@ function AddSource() {
           body: JSON.stringify(values),
         });
         if (!response.ok) {
-          toast.error('Failed to create source')
-          throw new Error('Failed to create source');
+          const newSource = await response.json();
+          toast.success('Source created successfully!');
+          
+          resetForm()
+        } else {
+          const errorData = await response.json();
+          toast.error(`Error: ${errorData.error}`);
         }
-        toast.success('Source created successfully!');
-        navigate('/view-all');
       } catch (error) {
-        console.error(error);
-        toast.error('Error creating source. Please try again.');
+        toast.error('An unexpected error occurred.');
       }
     },
   });

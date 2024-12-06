@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 function EditStory() {
 
   const {id} = useParams()
   const [selectedStory, setSelectedStory] = useState(null)
+  const navigate = useNavigate()
 
   const formik = useFormik({
     initialValues: {
@@ -43,7 +44,8 @@ function EditStory() {
         });
         if (response.ok) {
           const editedStory = await response.json(); //patched story
-          toast.success('Story created successfully!');
+          toast.success('Story updated successfully!');
+          navigate("/view-all")
           setSelectedStory(editedStory)
         } else {
           const errorData = await response.json();
@@ -68,8 +70,7 @@ function EditStory() {
               topic: data.topic,
               image: data.image,
             },)
-          }) // shortcut instead of saying data => setData
-            
+          }) 
         }
       })
   }, [id]);

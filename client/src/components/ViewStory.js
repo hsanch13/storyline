@@ -57,8 +57,6 @@ function ViewStory({ onDelete }) {
             <button onClick={handleUpdate}>Edit</button>
             <button onClick={handleDelete}>Delete</button>
         </div>
-
-
     )
 }
 

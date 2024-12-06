@@ -27,6 +27,7 @@ function AddStory() {
         .required('Topic is required'),
       image: Yup.string().url('Must be a valid URL'),
     }),
+    
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await fetch('/stories', {
