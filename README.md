@@ -125,6 +125,7 @@
 1. Initialize the database:
    ```bash
    flask db init
+   flask db migrate -m "MESSAGE"
    flask db upgrade
 2. Seed the database (optional):
    ```bash
