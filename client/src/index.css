@@ -233,9 +233,35 @@ a:hover:after {
 
 /* background css */
  body {
-  background-image: url('./assets/background.jpg'); 
+  background-image: url('./assets/background.jpg');
   background-size: cover;
   background-position: center center;
   height: 100vh; 
-  margin: 0; 
+  margin: 0;
 } 
+
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center */
+  align-items: center; /* Horizontally center */
+  height: 100vh; /* Make the container full height of the viewport */
+  text-align: center; /* Ensure text is centered */
+  margin: 0; /* Remove any margin to make sure it's centered properly */
+}
+
+.welcome-container .d-grid {
+  display: grid; /* Grid layout for the buttons */
+  gap: 20px; /* Space between buttons */
+  justify-items: center; /* Center the buttons inside the grid */
+}
+
+.welcome-container h1 {
+  background-color: #333; /* Dark background for the box */
+  color: #fff; /* White text color */
+  padding: 20px 30px; /* Padding inside the box */
+  border-radius: 8px; /* Rounded corners for the box */
+  display: inline-block; /* Ensures the background box wraps the text */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow to the box for a 3D effect */
+}
+
