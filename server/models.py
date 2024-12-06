@@ -136,9 +136,9 @@ class Source(db.Model, SerializerMixin):
         email_regex = r"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$)"
         if not re.match(email_regex, value):
             raise ValueError("your email has an invalid format")
-        existing_email = self.query.filter_by(email = value).first()
-        if existing_email:
-            raise ValueError("your email already exists")
+        # existing_email = self.query.filter_by(email = value).first()
+        # if existing_email:
+        #     raise ValueError("your email already exists")
         return value.lower()
 
     def __repr__(self):
