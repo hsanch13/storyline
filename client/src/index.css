@@ -178,3 +178,56 @@
     padding: 15px 45px;
     font-size: 16px;
 }
+
+
+/* button hover css */
+body {
+  background: #eee;
+}
+
+a {
+  padding: 20px 40px;
+  line-height: 10px;
+  color: #fff;
+  font-size: 20px;
+  background: #000; /* Black background */
+  text-decoration: none;
+  position: relative;
+  transition: all ease 0.6s;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 10px;
+  margin-top: 20px; /* Adjust margin */
+  margin-left: 20px; /* Align to left side */
+}
+
+a span {
+  z-index: 1;
+  position: relative;
+}
+
+a:after {
+  transform: scale(0);
+  background: #fff;
+  position: absolute;
+  right: -200px;
+  bottom: -200px;
+  content: '';
+  border-radius: 100%;
+  transition: all ease 0.6s;
+  width: 400px;
+  height: 400px;
+}
+
+a:hover {
+  background: #ccc; /* Grey background on hover */
+  color: #000; /* Black text on hover */
+}
+
+a:hover:after {
+  transform: scale(1);
+  transition: all ease 0.6s;
+}
+
+
+/*  */
